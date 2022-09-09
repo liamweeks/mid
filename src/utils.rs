@@ -7,6 +7,14 @@ pub(crate) fn extract_op(s: &str) -> (&str, &str) {
    (&s[1..], &s[0..1])
 }
 
+
+pub(crate) fn tag<'a, 'b>(starting_text: &'a str, s: &'b str) -> &'b str {
+    if s.starts_with(starting_text) {
+        &s[starting_text.len()..]
+    } else {
+        panic!("Error: Expected {}", starting_text);
+    }
+}
 pub(crate) fn extract_digits(s: &str) -> (&str, &str) {
 
    // The SMART way
@@ -87,5 +95,10 @@ mod tests {
    #[test]
    fn extract_one_digit() {
       assert_eq!(extract_digits("1+2"), ("+2", "1"));
+   }
+
+   #[test]
+   fn tag_word() {
+   assert_eq!(tag("rn", "rn a"), " a");
    }
 }
